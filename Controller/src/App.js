@@ -16,12 +16,16 @@ class App extends Component {
       forrward:2,
       mLeft: 20,
       up:20,
-      controllerCommands:[
-        this.LeftR,
-        this.forrward,
-        null,
-        this.moveLeft,
-        this.up
+      controllerCommands: [
+        this.LeftR, // rotate 90
+        this.forrward, // move forrward
+        null, // rotate 15
+        this.moveLeft, // move left
+        this.up, // move up 
+        null, //move right
+        null, //move down
+        null, // take off
+        null, // land
       ]
     }
   }
