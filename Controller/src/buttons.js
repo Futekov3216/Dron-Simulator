@@ -1,6 +1,6 @@
 module.exports = [
     {   
-        title:"360°",
+        title:"360",
         class:"rotate",
         stitle:"⟲",
         sclass:"symbol",
@@ -12,7 +12,7 @@ module.exports = [
         sclass: "symbol",
     },
     {
-        title: "15°",
+        title: "-360",
         class: "rotate",
         stitle: "⟳",
         sclass: "symbol",

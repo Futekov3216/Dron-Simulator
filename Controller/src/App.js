@@ -18,19 +18,19 @@ class App extends Component {
         up: 0,
       },
       response: false,
-      leftRotate:360,
-      rightRotate: -360,
+      leftRotate: 0,
       forrward:2,
-      mLeft: 20,
+      back:-2,
+      mLeft: 0,
       up:20,
       controllerCommands: [
-        this.LeftR, // rotate 90
+        this.Rotate, // rotate 90
         this.forrward, // move forrward
-        this.rightR, // rotate 15
-        this.moveLeft, // move left
+        this.Rotate, // rotate 15
+        this.Sideways, // move left
         this.up, // move up 
-        null, //move right
-        null, //move down
+        this.Sideways, //move right
+        this.back, //move down
         null, // take off
         this.Land, // land
       ],
@@ -46,32 +46,34 @@ class App extends Component {
     });
   }
 
-  LeftR = async () => {
-    await socket.emit('leftR', this.state.leftRotate);
-    await socket.on('leftR', leftR => {
-      leftR += 360 
-      this.setState({
-        leftRotate: leftR
+  Rotate = async (e) => { // ROTATIONS
+    let target = await e.target.getAttribute('index')
+    var leftRotate = await Number(target === "360" ? 360 : -360);
+    var result = this.state.leftRotate + leftRotate
+    await socket.emit('leftR', result);
+    await socket.on('leftR', async leftR => {
+     await this.setState({
+       leftRotate: leftR,
       })
     })
-  }
-
-  rightR = async (e) => {
-    let target = e.target.getAttribute('index')
-    console.log(target)
-    await socket.emit('leftR', target === "15°" ? this.state.rightRotate : this.state.leftRotate);
-    await socket.on('leftR', leftR => {
-      leftR -= 360
-      this.setState({
-        leftRotate: leftR
-      })
-    })
+    console.log(" UIBHFAOUSH OIA",this.state.leftRotate)
   }
 
   forrward = async () => {
     await socket.emit('forrward', this.state.forrward);
     await socket.on('forrward', forrward => {
       forrward += 1
+      this.setState({
+        forrward: forrward
+      })
+    })
+  }
+
+
+  back = async () => {
+    await socket.emit('forrward', this.state.back);
+    await socket.on('forrward', forrward => {
+      forrward -= 1
       this.setState({
         forrward: forrward
       })
@@ -88,12 +90,14 @@ class App extends Component {
     })
   }
 
-  moveLeft = async () => {
-    await socket.emit('mLeft', this.state.mLeft);
-    await socket.on('mLeft', mLeft => {
-      mLeft += 20
-      this.setState({
-        mLeft: mLeft
+  Sideways = async (e) => {
+    let target = await e.target.getAttribute('index')
+    var leftRotate = await Number(target === "left" ? 20 : -20);
+    var result = this.state.mLeft + leftRotate
+    await socket.emit('mLeft', result);
+    await socket.on('mLeft', async mLeft => {
+      await this.setState({
+        mLeft: result
       })
     })
   }

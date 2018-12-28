@@ -36,7 +36,7 @@ export default {
         },
         leftRotate(){
            this.socket.on('leftR', leftR => {
-               console.log("IMA LI ", leftR)
+               console.log("IMA LI BATE ", leftR)
                this.leftR = leftR
             })
         },
