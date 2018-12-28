@@ -1,6 +1,6 @@
 module.exports = [
     {   
-        title:"90°",
+        title:"360°",
         class:"rotate",
         stitle:"⟲",
         sclass:"symbol",

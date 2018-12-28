@@ -34,6 +34,10 @@ io.on('connection', function (socket) {
         console.log("leftR====", up)
         io.emit("up", up)
     })
+    socket.on('land', land => {
+        console.log("land====", land)
+        io.emit("land", land)
+    })
 
 
 
