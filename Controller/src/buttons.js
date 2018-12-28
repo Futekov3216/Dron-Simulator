@@ -37,7 +37,7 @@ module.exports = [
     },
 
     {
-        title: "back",
+        title: "down",
         class: "",
         stitle: "↓",
         sclass: "symbol",

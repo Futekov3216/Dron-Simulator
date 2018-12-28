@@ -107,3 +107,12 @@ h2 {
     transition: all 2s;
     width: 8%;
 }
+
+button.inactive {
+    background: gray;
+    pointer-events: none;
+}
+
+.wrapperInfo h1{
+    text-align: left;
+}

@@ -1,9 +1,8 @@
 <template>
     <div>
-        <h1>ROTATE +90 C: {{leftR}}</h1>
-        <h1>up: {{updata}}</h1>
+        <!-- <h1>up: {{updata}}</h1>
         <h1>forrward: {{forrward}}</h1>
-        <h1>move left {{mLeft}}</h1>
+        <h1>move left {{mLeft}}</h1> -->
         <h1> {{landed ? "Landing..." : ''}}</h1>
         <div class="drone" >
             <img src="./images/drone.png" alt="" :style="stylesFn()">

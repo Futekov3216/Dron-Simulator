@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import socketIOClient from "socket.io-client";
 import './App.css';
 import buttonsJson from './buttons.js'
-
-const endpoint = "http://10.10.0.239:3001";
+import Info from './Info.js'
+const host = "10.10.0.239" // must be the real ip to work on phones otherwise localhost does the
+const endpoint = `http://${host}:3001`; 
 const socket = socketIOClient(endpoint);
 
 class App extends Component {
@@ -31,7 +32,7 @@ class App extends Component {
         this.up, // move up 
         this.Sideways, //move right
         this.back, //move down
-        null, // take off
+        this.takeOff, // take off
         this.Land, // land
       ],
       latitude:'',
@@ -71,7 +72,7 @@ class App extends Component {
 
 
   back = async () => {
-    await socket.emit('forrward', this.state.back);
+    await socket.emit('forrward', this.state.forrward);
     await socket.on('forrward', forrward => {
       forrward -= 1
       this.setState({
@@ -90,12 +91,22 @@ class App extends Component {
     })
   }
 
+  takeOff = async () => {
+    await socket.emit('up', this.state.up);
+    await socket.on('up', up => {
+      up += 20
+      this.setState({
+        up: up
+      })
+    })
+  }
+
   Sideways = async (e) => {
     let target = await e.target.getAttribute('index')
     var leftRotate = await Number(target === "left" ? 20 : -20);
     var result = this.state.mLeft + leftRotate
     await socket.emit('mLeft', result);
-    await socket.on('mLeft', async mLeft => {
+    await socket.on('mLeft', async () => {
       await this.setState({
         mLeft: result
       })
@@ -136,7 +147,7 @@ class App extends Component {
         
   buttons = () => {
     return buttonsJson.map((res, index) => {
-      return <button key={index} className={res.class} index={res.title} onClick={this.state.controllerCommands[index]}><span className={res.sclass}>{res.stitle}</span>{res.title}</button>
+      return <button key={index} className={this.state.up >= 30 && res.class === "takeoff" ? res.class +" "+ "inactive" : res.class} index={res.title} onClick={this.state.controllerCommands[index]}><span className={res.sclass}>{res.stitle}</span>{res.title}</button>
     })
   }
   
@@ -150,7 +161,7 @@ class App extends Component {
         <h1>longitude {this.state.longitude}</h1> */}
         <h1>{response ? "CONNECTED" : "DISCONNECTED"}</h1>
          <div className="commandGrid">{this.buttons()}</div>
-        {/* <Drone data={this.state.response} leftRotate={this.state.leftRotate} up={this.state.up} forrward={this.state.forrward}/> */}
+        <Info data={this.state.response} up={this.state.up} forrward={this.state.forrward} position={this.state.mLeft}/>
       </div>
     );
   }
