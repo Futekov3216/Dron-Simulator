@@ -139,11 +139,13 @@ class App extends Component {
   }
 
   error = (err) => {
-    alert(err)
+    alert('err', err)
   }
 
   location = () => {
-   navigator.geolocation.getCurrentPosition(this.showPosition, this.error);
+
+      navigator.geolocation.getCurrentPosition(this.showPosition, this.error);
+    
   }
 
 
@@ -159,9 +161,9 @@ class App extends Component {
     return (
       <div className="App">
         {/* <button onClick={this.location}>location</button> */}
-        {this.location()}
-        <h1>latitude {this.state.latitude}</h1>
-        <h1>longitude {this.state.longitude}</h1>
+        {/* {this.location()} */}
+        {/* <h1>latitude {this.state.latitude}</h1>
+        <h1>longitude {this.state.longitude}</h1> */}
         <h1>{response ? "CONNECTED" : "DISCONNECTED"}</h1>
          <div className="commandGrid">{this.buttons()}</div>
         <Info data={this.state.response} up={this.state.up} forrward={this.state.forrward} position={this.state.mLeft}/>

@@ -2,15 +2,19 @@ const port = 3001;
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
+// const host = "http://10.10.0.239:3000/"
 app.get('/', function (req, res) {
     res.send("HELLO");
 });
 
 io.on('connection', function (socket) {
-        console.log("NEW USER")
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
+    // console.log(socket.handshake.headers.referer)
+    // if (socket.handshake.headers.referer != host){
+    //     socket.disconnect(true)
+    // }
+    // console.log("NEW USER", socket.handshake.headers.referer)
+    socket.on('disconnect', function (res) {
+        console.log("DISCONNECTED USER ee")
     });
 
     socket.emit("data" , true);
@@ -38,8 +42,6 @@ io.on('connection', function (socket) {
         console.log("land====", land)
         io.emit("land", land)
     })
-
-
 
 });
 
