@@ -1,7 +1,15 @@
 const port = 3001;
 var app = require('express')();
 var http = require('http').Server(app);
+var https = require('https');
+const fs = require('fs');
 var io = require('socket.io')(http);
+
+var https_options = {
+    key: fs.readFileSync('./certs/key.pem'),
+    cert: fs.readFileSync('./certs/cert.pem'),
+
+};
 // const host = "http://10.10.0.239:3000/"
 app.get('/', function (req, res) {
     res.send("HELLO");
@@ -48,3 +56,7 @@ io.on('connection', function (socket) {
 http.listen(port, function () {
     console.log(`listening on :${port}`);
 });
+
+// https.createServer(https_options, app).listen(port, () => {
+//     console.log(`zdre ot ${port}`)
+// })
