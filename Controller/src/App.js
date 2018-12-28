@@ -31,7 +31,7 @@ class App extends Component {
         this.Sideways, // move left
         this.up, // move up 
         this.Sideways, //move right
-        this.back, //move down
+        this.up, //move down
         this.takeOff, // take off
         this.Land, // land
       ],
@@ -71,22 +71,25 @@ class App extends Component {
   }
 
 
-  back = async () => {
-    await socket.emit('forrward', this.state.forrward);
-    await socket.on('forrward', forrward => {
-      forrward -= 1
-      this.setState({
-        forrward: forrward
-      })
-    })
-  }
+  // back = async () => {
+  //   await socket.emit('forrward', this.state.forrward);
+  //   await socket.on('forrward', forrward => {
+  //     forrward -= 1
+  //     this.setState({
+  //       forrward: forrward
+  //     })
+  //   })
+  // }
 
-  up = async () => {
-    await socket.emit('up', this.state.up);
+  up = async (e) => {
+    let target = await e.target.getAttribute('index')
+    var leftRotate = await Number(target === "up" ? 20 : -20);
+    var result = this.state.up + leftRotate
+    await socket.emit('up', result);
     await socket.on('up', up => {
-      up += 20
+      // up += 20
       this.setState({
-        up: up
+        up: result
       })
     })
   }
@@ -156,9 +159,9 @@ class App extends Component {
     return (
       <div className="App">
         {/* <button onClick={this.location}>location</button> */}
-        {/* {this.location()} */}
-        {/* <h1>latitude {this.state.latitude}</h1>
-        <h1>longitude {this.state.longitude}</h1> */}
+        {this.location()}
+        <h1>latitude {this.state.latitude}</h1>
+        <h1>longitude {this.state.longitude}</h1>
         <h1>{response ? "CONNECTED" : "DISCONNECTED"}</h1>
          <div className="commandGrid">{this.buttons()}</div>
         <Info data={this.state.response} up={this.state.up} forrward={this.state.forrward} position={this.state.mLeft}/>

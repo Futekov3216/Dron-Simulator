@@ -56,7 +56,7 @@ module.exports = [
         sclass: "symbol",
     },
     {
-        class: "emergency",
+        class: "emergency inactive",
         title: "!! emergency !!",
         stitle: "",
         sclass: "symbol",
